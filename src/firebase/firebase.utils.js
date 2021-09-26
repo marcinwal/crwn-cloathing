@@ -12,7 +12,7 @@ const config = {
     measurementId: "G-KRDNMVETKQ"
 };
 
-export const createUserProfileDocument = async(userAuth, additionalData ) => {
+export const createUserProfileDocument = async (userAuth, additionalData ) => {
     if(!userAuth) return;
 
     const userRef = firestore.doc(`users/${userAuth.uid}`);
@@ -33,8 +33,7 @@ export const createUserProfileDocument = async(userAuth, additionalData ) => {
             console.log('error creating user', error.message);
         }
     }
-
-
+    return userRef;
 }
 
 firebase.initializeApp(config);
