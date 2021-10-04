@@ -1,4 +1,3 @@
-import { unstable_concurrentAct } from 'react-dom/cjs/react-dom-test-utils.development';
 import { createSelector } from 'reselect';
 
 const selectCart = state => state.cart;
