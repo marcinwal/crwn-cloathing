@@ -25,9 +25,26 @@ class ShopPage  extends React.Component {
     unsubscribeFromSnapshot = null;
 
     componentDidMount() {
-        const collectionRef = firestore.collection('collections');
         const { updateCollections } = this.props;
-        this.unsubscribeFromSnapshot = collectionRef.onSnapshot(async snapshot => {
+        const collectionRef = firestore.collection('collections');
+
+
+        //TODO read the docs at https://firebase.google.com/docs/firestore/use-rest-api#making_rest_calls
+        //below is fetch example but firestore is nested so a lot of work
+        // fetch('https://firestore.googleapis.com/v1/projects/crwn-react-udemy/databases/(default)/documents/collections')
+        // .then(response => response.json())
+        // .then(collections => console.log(collections));
+
+
+        // this.unsubscribeFromSnapshot = collectionRef.onSnapshot(async snapshot => {
+        //     const collectionsMap = convertCollectionSnapshotToMap(snapshot);
+        //     console.log(collectionsMap);
+        //     updateCollections(collectionsMap);
+        //     this.setState({loading: false});
+        // });
+
+        //using promises
+        collectionRef.get().then(snapshot => {
             const collectionsMap = convertCollectionSnapshotToMap(snapshot);
             console.log(collectionsMap);
             updateCollections(collectionsMap);
