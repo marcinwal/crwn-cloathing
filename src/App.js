@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import './App.css';
 
@@ -13,14 +13,19 @@ import CheckoutPage from './pages/checkout/checkout.component';
 import { selectCurrentUser } from './redux/user/user.selectors'
 import { checkUserSession } from './redux/user/user.actions';
 
-const App = ({ checkUserSession, currentUser }) => {
+// const App = ({ checkUserSession, currentUser }) => {
+const App = () => {  
 
+  const currentUser = useSelector(selectCurrentUser);
+  console.log(currentUser);
+  const isHidden = useSelector((state) => state.isHidden);
+  console.log(isHidden);
 
   // unsubscribeFromAuth = null;
 
-  useEffect(() => {
-    checkUserSession()
-  }, [checkUserSession]);
+  // useEffect(() => {
+  //   checkUserSession()
+  // }, [checkUserSession]);
 
   // componentWillUnmount() {
   //   this.unsubscribeFromAuth();
@@ -62,7 +67,9 @@ const mapDispatchToProps = dispatch => ({
 });
 
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App);
+// export default connect(
+//   mapStateToProps,
+//   mapDispatchToProps
+// )(App);
+
+export default App;
