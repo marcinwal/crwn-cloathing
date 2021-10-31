@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
+// import { createStructuredSelector } from 'reselect';
 import './App.css';
 
 import HomePage from './pages/homepage/homepage.component';
@@ -17,9 +17,14 @@ import { checkUserSession } from './redux/user/user.actions';
 const App = () => {  
 
   const currentUser = useSelector(selectCurrentUser);
-  console.log(currentUser);
-  const isHidden = useSelector((state) => state.isHidden);
-  console.log(isHidden);
+  const dispatch = useDispatch(); //this function is reassigned every single time component starts; that is why useEffect is with .... [dispatch] not [checkUserSession]
+  // console.log(currentUser);
+  // const isHidden = useSelector((state) => state.isHidden);
+  // console.log(isHidden);
+
+  useEffect(()=>{
+    dispatch(checkUserSession());
+  },[dispatch]); //dependency that reruns once it is changed
 
   // unsubscribeFromAuth = null;
 
@@ -58,13 +63,13 @@ const App = () => {
 //   currentUser: user.currentUser
 // });
 
-const mapStateToProps = createStructuredSelector({
-  currentUser: selectCurrentUser
-});
+// const mapStateToProps = createStructuredSelector({
+//   currentUser: selectCurrentUser
+// });
 
-const mapDispatchToProps = dispatch => ({
-  checkUserSession: () => dispatch(checkUserSession())
-});
+// const mapDispatchToProps = dispatch => ({
+//   checkUserSession: () => dispatch(checkUserSession())
+// });
 
 
 // export default connect(
