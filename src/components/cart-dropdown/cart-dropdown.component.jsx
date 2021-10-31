@@ -1,7 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { withRouter } from 'react-router';
+import { useParams, useHistory } from 'react-router-dom';
 
 import CustomButton from '../custom-button/custom-button.component';
 import CartItem from '../cart-item/cart-item.component';
@@ -11,7 +11,13 @@ import { toggleCartHidden } from '../../redux/cart/cart.actions';
 import './cart-dropdown.styles.scss';
 
 //dispatch is included by connect so no need to mapToDispatch 
-const CartDropdown = ({ cartItems, history, dispatch }) => (
+const CartDropdown = () => {
+
+    const cartItems = useSelector(selectCartItems);
+    const dispatch = useDispatch();
+    const history = useHistory()
+
+    return (
     <div className='cart-dropdown'>
         <div className='cart-items'>
             {
@@ -23,20 +29,20 @@ const CartDropdown = ({ cartItems, history, dispatch }) => (
             }
         </div>
         <CustomButton onClick={() => { 
-            history.push('/checkout')
+            history.push('/checkout');
             dispatch(toggleCartHidden());
         }}>
             GO TO CHECKOUT
         </CustomButton>
     </div>
-);
+)};
 
 // const mapStateToProps = (state) => ({
 //     cartItems: selectCartItems(state)
 // });
 
-const mapStateToProps = createStructuredSelector({
-    cartItems: selectCartItems
-});
+// const mapStateToProps = createStructuredSelector({
+//     cartItems: selectCartItems
+// });
 
-export default withRouter(connect(mapStateToProps)(CartDropdown)); //with router adding to'history'
+export default CartDropdown; //with router adding to'history'
